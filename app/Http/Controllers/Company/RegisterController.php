@@ -3,24 +3,28 @@
 namespace App\Http\Controllers\Company;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Company\RegisterRequest;
-use App\Http\Services\Company\RegisterService;
+use App\Http\Requests\Company\RegisterRequest as Request;
+use App\Http\Services\Company\RegisterService as Service;
+
 use Exception;
 
 class RegisterController extends Controller
 {
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(RegisterRequest $request, RegisterService $registerService)
+    private Service $service;
+
+    public function __construct(Service $service) {
+        $this->service = $service;
+    }
+
+    public function store(Request $request)
     {
         try {
-            $company = $registerService::handle($request->validated());
+            $this->service->handle($request);
         } catch(Exception $e) {
             return response()->json([
                 'message' => $e->getMessage(),
                 'status' => 'failed'
-            ], $e->getCode());
+            ], 500);
         }
 
         return response()->json([

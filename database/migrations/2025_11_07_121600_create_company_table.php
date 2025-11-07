@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('company', function (Blueprint $table) {
-            // cnpj as number makes sense rng
-            $table->unsignedInteger('cnpj')->nullable(false);
-            $table->string('legal_name')->nullable(false);
-            $table->string('email')->nullable(false);
+            $table->string('cnpj')->nullable(false)->unique();
+            $table->string('legal_name')->nullable(false)->unique();
+            $table->string('email')->nullable(false)->unique();
             $table->string('password')->nullable(false);
+            $table->timestamps();
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('company', function (Blueprint $table) {
-            //
+            Schema::dropIfExists('company');
         });
     }
 };

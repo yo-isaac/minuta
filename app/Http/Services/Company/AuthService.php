@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\Company;
 
+use App\Helpers\Hazh;
 use App\Helpers\Stringy;
 use App\Http\Repositories\Company as Repository;
 use App\Http\Requests\Company\AuthRequest as Request;
@@ -27,6 +28,16 @@ class AuthService {
                     'success' => false,
                     'message' => 'Company was not found',
                     'http_code' => 404,
+                ];
+            }
+
+            if (
+                Hazh::checkHash($request['password'], $company->password) === false
+            ) {
+                return [
+                    'success' => false,
+                    'message' => 'Incorrect Credentials',
+                    'http_code' => 401,
                 ];
             }
         } catch(Exception $e) {

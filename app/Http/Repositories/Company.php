@@ -2,10 +2,11 @@
 
 namespace App\Http\Repositories;
 
-use App\Http\Repositories\Contracts\Company as Contract;
+use Exception;
 use App\Models\Company as Model;
 
-use Exception;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Repositories\Contracts\Company as Contract;
 
 class Company implements Contract
 {
@@ -22,7 +23,7 @@ class Company implements Contract
                 'cnpj' => preg_replace('/\D/', '', $data['cnpj']),
                 'legal_name' => $data['legal_name'],
                 'email' => $data['email'],
-                'password' => $data['password']
+                'password' => Hash::make($data['password'])
             ]);
         } catch(Exception $e) {
             throw new Exception($e->getMessage());

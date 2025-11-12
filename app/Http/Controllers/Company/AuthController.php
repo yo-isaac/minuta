@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Company\AuthRequest as Request;
 use App\Http\Services\Company\AuthService as Service;
 
-use App\Exceptions\ModelException;
+use Exception;
 
 class AuthController extends Controller
 {
@@ -19,14 +19,14 @@ class AuthController extends Controller
     public function auth(Request $request) {
         try {
             $result = $this->service->handle($request);
-            $status = $result['http_code'] ?? 200;
+            $status = $result['http_code'];
 
             return response()->json($result, $status);
-        } catch(ModelException $e) {
+        } catch(Exception $e) {
             return response()->json([
                 'message' => $e->getMessage(),
                 'status' => 'failed'
-            ], $e->getHttpCode());
+            ], 500);
         }
     }
 }

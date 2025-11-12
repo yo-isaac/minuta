@@ -6,7 +6,7 @@ use App\Helpers\Stringy;
 use App\Http\Repositories\Company as Repository;
 use App\Http\Requests\Company\AuthRequest as Request;
 
-use App\Exceptions\ModelException;
+use Exception;
 
 class AuthService {
     protected Repository $repository;
@@ -29,8 +29,8 @@ class AuthService {
                     'http_code' => 404,
                 ];
             }
-        } catch(ModelException $e) {
-            throw new ModelException($e->getMessage(), $e->getHttpCode());
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage());
         } 
 
         return [

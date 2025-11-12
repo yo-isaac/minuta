@@ -10,10 +10,16 @@ use Exception;
 
 class Company implements Contract
 {
+    private Model $model;
+
+    public function __construct(Model $model) {
+        $this->model = $model;
+    }
+
 	public function create(array $data) 
     {
         try {
-            Model::create([
+            $this->model->create([
                 'cnpj' => preg_replace('/\D/', '', $data['cnpj']),
                 'legal_name' => $data['legal_name'],
                 'email' => $data['email'],
@@ -27,7 +33,7 @@ class Company implements Contract
 	public function getCompanyByCnpj(string $cnpj) 
     {
         try {
-            return Model::where('cnpj', '=', $cnpj)->first();
+            return $this->model->where('cnpj', '=', $cnpj)->first();
         } catch(ModelException $e) {
             throw new ModelException($e->getMessage());
         }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Repositories;
 
+use App\Helpers\Stringy;
 use Exception;
 use App\Models\Employee as Model;
 use App\Http\Repositories\Contracts\Employee as Contract;
@@ -19,11 +20,12 @@ class Employee implements Contract
     public function create(array $data) {
         try {
             $this->model->create([
-                'cpf' => preg_replace('/\D/', '', $data['cnpj']),
-                'name' => $data['legal_name'],
+                'cpf' => Stringy::removeNonDigits($data['cpf']),
+                'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
-                'role' => $data['role']
+                'role' => $data['role'],
+                'company_id' => $data['company_id']
             ]);
         } catch(Exception $e) {
             throw new Exception($e->getMessage());

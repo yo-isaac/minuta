@@ -12,17 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('employee', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->id();
 
-            $table->string('cpf')->nullable(false)->unique(true);
-            $table->string('name')->nullable(false)->unique(true);
-            $table->string('email')->nullable(false)->unique(true);
-            $table->string('password')->nullable(false)->unique(true);
-            
-            $table->string('role')->nullable(false)->unique(true);
+            $table->string('cpf')->unique();   
+            $table->string('email')->unique(); 
 
-            $table->string('company_id')->nullable(false);
-            $table->foreign('company_id')->references('id')->on('company')->onDelete('cascade');
+            $table->string('name');            
+            $table->string('password');        
+            $table->string('role');            
+
+            $table->foreignId('company_id')
+                ->constrained('company')
+                ->onDelete('cascade');
 
             $table->timestamps();
         });

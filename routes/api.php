@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Company\RegisterController as RegisterCompany;
 use App\Http\Controllers\Company\AuthController as AuthCompany;
 
-use App\Http\Controllers\Company\Dashboard\Management\EmployeeController as EmployeeManagementController;
+use App\Http\Controllers\Company\Dashboard\Management\EmployeeController as EmployeeAction;
 
 Route::prefix('company')->group(function() {
     Route::prefix('register')->group(function() {
@@ -19,7 +19,7 @@ Route::prefix('company')->group(function() {
     Route::prefix('dashboard')->group(function() {
         Route::prefix('management')->group(function() {
             Route::prefix('employee')->group(function() {
-                Route::post('/', [EmployeeManagementController::class, 'store']);
+                Route::post('/', [EmployeeAction::class, 'store']);
             });
         });
     });

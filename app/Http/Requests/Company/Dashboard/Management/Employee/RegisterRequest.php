@@ -30,6 +30,7 @@ class RegisterRequest extends FormRequest
             'email' => 'required|email',
             'password' => 'required|max:255',  
             'role' => 'required|max:255',  
+            'company_id' => 'required'
         ];
     }
 

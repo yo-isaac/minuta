@@ -28,8 +28,8 @@ class EmployeeController extends Controller
 
         return response()->json([
             'message' => 'employee created successful',
-            'action' => 'email sent!',
-            'status' => 'ok'
+            'action' => 'employee should now login-in',
+            'status' => 'pending'
         ], 201);
     }
 }

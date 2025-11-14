@@ -31,4 +31,13 @@ class Employee implements Contract
             throw new Exception($e->getMessage());
         } 
     }
+
+	public function getByCpf(string $cpf) 
+    {
+        try {
+            return $this->model->where('cpf', '=', $cpf)->first();
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
 }

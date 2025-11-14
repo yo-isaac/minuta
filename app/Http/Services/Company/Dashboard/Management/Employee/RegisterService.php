@@ -2,23 +2,28 @@
 
 namespace App\Http\Services\Company\Dashboard\Management\Employee;
 
-use Exception;
-
 use Illuminate\Support\Str;
 use App\Http\Repositories\Employee as Repository;
 use App\Http\Services\Company\Dashboard\Management\Employee\MailService as Mail;
+use App\Http\Services\Company\Dashboard\Management\Employee\FirstAccessService as Service;
+
+use App\Helpers\Stringy;
+use Exception;
 
 class RegisterService
 {
     private Repository $repository;
+    private Service $service;
     private Mail $mail;
 
     public function __construct(
         Repository $repository,
+        Service $service,
         Mail $mail
     )
     {
         $this->repository = $repository;
+        $this->service = $service;
         $this->mail = $mail;
     }
 
@@ -35,6 +40,13 @@ class RegisterService
             );
 
             $this->repository->create($data);
+            $this->service->add(
+                (
+                    $this->repository->getByCpf(
+                        Stringy::removeNonDigits($data['cpf'])
+                    )
+                )->id, 
+                $data['company_id']);
         } catch(Exception $e) {
             throw new Exception($e->getMessage());
         }

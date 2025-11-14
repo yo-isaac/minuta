@@ -11,19 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employee', function (Blueprint $table) {
+        Schema::create('first_access', function (Blueprint $table) {
             $table->id();
 
-            $table->string('cpf')->unique();   
-            $table->string('email')->unique(); 
-
-            $table->string('name');            
-            $table->string('password');        
-            $table->string('role');            
+            $table->foreignId('employee_id')
+                ->constrained('employee')
+                ->onDelete('cascade');
 
             $table->foreignId('company_id')
                 ->constrained('company')
                 ->onDelete('cascade');
+
+            $table->enum('status', ['PENDING', 'DONE'])->default('PENDING');
 
             $table->timestamps();
         });
@@ -34,8 +33,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('employee', function (Blueprint $table) {
-            Schema::dropIfExists('employee');
+        Schema::table('first_access', function (Blueprint $table) {
+            Schema::dropIfExists('first_access');
         });
     }
 };

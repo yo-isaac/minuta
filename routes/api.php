@@ -23,4 +23,10 @@ Route::prefix('company')->group(function() {
             });
         });
     });
-}); 
+});
+
+Route::prefix('/employee')->group(function() {
+    Route::prefix('auth')->group(function() {
+        // Route::post('/', [AuthEmployee::class, 'auth']);
+    });
+});

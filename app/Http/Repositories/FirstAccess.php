@@ -38,5 +38,19 @@ class FirstAccess implements Contract
 
 	public function maskAsDone(string $id) 
     {
+        try {
+            $this->model->where('employee_id', '=', $id)->update(['status' => 'DONE']);
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public function getByEmployeeId(string $id) 
+    {
+        try {
+            return $this->model->where('employee_id', '=', $id)->first();
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage());
+        }
     }
 }

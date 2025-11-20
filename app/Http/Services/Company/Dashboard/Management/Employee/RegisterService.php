@@ -30,13 +30,13 @@ class RegisterService
     public function handle(array $data) 
     {
         try {
-            $randomPassword = $this->getRandomPassword();
+            $data["password"] = $this->getRandomPassword();
 
             $this->mail->sendCredential(
                 email: $data['email'],
                 name: $data['name'],
                 cpf: $data['cpf'],
-                password: $randomPassword
+                password: $data['password']
             );
 
             $this->repository->create($data);

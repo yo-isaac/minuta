@@ -4,8 +4,9 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Company\RegisterController as RegisterCompany;
 use App\Http\Controllers\Company\AuthController as AuthCompany;
-
 use App\Http\Controllers\Company\Dashboard\Management\EmployeeController as EmployeeAction;
+
+use App\Http\Controllers\Employee\AuthController as AuthEmployee;
 
 Route::prefix('company')->group(function() {
     Route::prefix('register')->group(function() {
@@ -25,8 +26,12 @@ Route::prefix('company')->group(function() {
     });
 });
 
-Route::prefix('/employee')->group(function() {
+Route::prefix('employee')->group(function() {
     Route::prefix('auth')->group(function() {
-        // Route::post('/', [AuthEmployee::class, 'auth']);
+        Route::post('/', [AuthEmployee::class, 'auth']);
+    });
+
+    Route::prefix('password')->group(function() {
+        Route::patch('/', [AuthEmployee::class, 'changePassword']);
     });
 });

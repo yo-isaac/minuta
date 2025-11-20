@@ -4,7 +4,7 @@ namespace App\Http\Requests\Employee;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AuthRequest extends FormRequest
+class PasswordResetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,6 +24,7 @@ class AuthRequest extends FormRequest
         return [
             'cpf' => 'required|regex:/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/',
             'password' => 'required|min:8',
+            'new_password' => 'required|min:8'
         ];
     }
 }

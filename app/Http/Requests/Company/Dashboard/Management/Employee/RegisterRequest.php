@@ -28,7 +28,6 @@ class RegisterRequest extends FormRequest
             'cpf' => 'required|regex:/^\d{3}\.\d{3}\.\d{3}-\d{2}$/',
             'name' => 'required|max:255',
             'email' => 'required|email',
-            'password' => 'required|max:255',  
             'role' => 'required|max:255',  
             'company_id' => 'required'
         ];

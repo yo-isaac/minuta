@@ -40,4 +40,13 @@ class Employee implements Contract
             throw new Exception($e->getMessage());
         }
     }
+
+	public function exists(string $cpf): bool 
+    {
+        try {
+            return $this->model->where('cpf', '=', $cpf)->exists();
+        } catch(Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
 }
